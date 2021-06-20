@@ -11,6 +11,7 @@ namespace SearchSystemCoreApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Produces("application/json")]
     public class SearchController : ControllerBase
     {
         private readonly ILogger<SearchController> _logger;

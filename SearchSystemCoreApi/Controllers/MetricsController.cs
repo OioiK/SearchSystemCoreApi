@@ -7,6 +7,7 @@ namespace SearchSystemCoreApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Produces("text/plain")]
     public class MetricsController : ControllerBase
     {
         private readonly ILogger<MetricsController> _logger;
