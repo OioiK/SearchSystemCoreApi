@@ -74,11 +74,24 @@ namespace SearchSystemCoreApi.Controllers
         /// <param name="parameters"></param>
         /// <returns>
         /// <response code="200">Returns result of requests</response>
+        /// <response code="400">Returns BadRequest</response>
         /// </returns>        
         [HttpGet]
         [ProducesResponseType(typeof(List<ResponseModel>), 200)]
         public async Task<IActionResult> GetResponse([FromQuery] SearchParams parameters)
         {
+            if (parameters.RandomMin > parameters.RandomMax)
+                ModelState.AddModelError("randomMin", "randomMin can't be greater than randomMax");
+
+            if (parameters.RandomMin < 0)
+                ModelState.AddModelError("randomMin", "randomMin must be greater than or equal to zero");
+
+            if (parameters.RandomMax < 0)
+                ModelState.AddModelError("randomMax", "randomMax must be greater than or equal to zero");
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var cancellationTokenSource = new CancellationTokenSource(parameters.WaitTime);
             var token = cancellationTokenSource.Token;
 
