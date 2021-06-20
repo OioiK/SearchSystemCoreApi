@@ -5,7 +5,7 @@ namespace SearchSystemCoreApi
     internal static class MetricsService
     {
         private static readonly object _locker = new object();
-        internal static Dictionary<string, List<int>> metricsStorage = new Dictionary<string, List<int>>()
+        private static Dictionary<string, List<int>> metricsStorage = new Dictionary<string, List<int>>()
         {
             {
                 "External A", new List<int>()
