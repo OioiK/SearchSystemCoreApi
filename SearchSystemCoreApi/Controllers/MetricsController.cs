@@ -39,7 +39,10 @@ namespace SearchSystemCoreApi.Controllers
                 var secondNumber = i + 1;
 
                 sb.Append($"{firstNumber}-{secondNumber} сек:\n");
-                foreach (var pair in MetricsService.metricsStorage)
+
+                var metricsStorage = MetricsService.GetMetricsStorage();
+
+                foreach (var pair in metricsStorage)
                 {
                     sb.Append($"{pair.Key} --> {pair.Value.Where(x => x >= (firstNumber * 1000) && x < (secondNumber * 1000)).Count()}\n");
                 }

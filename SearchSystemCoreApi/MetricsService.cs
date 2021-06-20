@@ -4,6 +4,7 @@ namespace SearchSystemCoreApi
 {
     internal static class MetricsService
     {
+        private static readonly object _locker = new object();
         internal static Dictionary<string, List<int>> metricsStorage = new Dictionary<string, List<int>>()
         {
             {
@@ -21,7 +22,18 @@ namespace SearchSystemCoreApi
         };
         internal static void OnRequestCompleted(object source, MetricsEventArgs args)
         {
-            metricsStorage[args.Name].Add(args.Time);
+            lock (_locker)
+            {
+                metricsStorage[args.Name].Add(args.Time);
+            }            
+        }
+
+        internal static Dictionary<string, List<int>> GetMetricsStorage()
+        {
+            lock (_locker)
+            {
+                return metricsStorage;
+            }
         }
     }
 }
