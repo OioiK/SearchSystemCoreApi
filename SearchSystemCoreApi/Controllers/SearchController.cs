@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using SearchSystemCoreApi.ExternalSearchSystems;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,6 +34,11 @@ namespace SearchSystemCoreApi.Controllers
         private async Task<List<ResponseModel>> RunRequestAsync(int min, int max, CancellationToken cancellationToken)
         {
             var responseModelList = new List<ResponseModel>();
+
+            _externalA.RequestCompleted += MetricsService.OnRequestCompleted;
+            _externalB.RequestCompleted += MetricsService.OnRequestCompleted;
+            _externalC.RequestCompleted += MetricsService.OnRequestCompleted;
+            _externalD.RequestCompleted += MetricsService.OnRequestCompleted;
 
             var responseTaskA = _externalA.Request(min, max, cancellationToken);
             var responseTaskB = _externalB.Request(min, max, cancellationToken);
